@@ -1,0 +1,308 @@
+:root {
+  --theme-color: #FFD700;
+  --highlight-color: var(--theme-color);
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --light-gray: #f0f0f0;
+  --medium-gray: #ddd;
+  --dark-gray: #666;
+}
+
+/* Base Styles */
+.rhymes-container {
+  font-family: 'Comic Sans MS', 'Marker Felt', 'Chalkboard', sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: var(--bg-color);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.rhymes-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: var(--theme-color);
+}
+
+/* Header */
+.rhyme-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.rhyme-header h1 {
+  color: var(--theme-color);
+  margin: 0;
+  font-size: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--theme-color);
+}
+
+/* Control Panel */
+.rhyme-control-panel {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.rhyme-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.rhyme-option {
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: white;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rhyme-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rhyme-option.active {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px white, 0 0 0 5px var(--theme-color);
+}
+
+.emoji {
+  font-size: 1.5rem;
+}
+
+.title {
+  font-size: 0.9rem;
+}
+
+/* Player Controls */
+.player-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.play-button {
+  background: var(--theme-color);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.play-button:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.play-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.play-button.playing {
+  background: #e74c3c;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.progress-container {
+  flex-grow: 1;
+  height: 8px;
+  background: var(--light-gray);
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 100px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--theme-color);
+  border-radius: 4px;
+  transition: width 0.1s linear;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Rhyme Display */
+.rhyme-display {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.rhyme-visual {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.image-container {
+  width: 150px;
+  height: 150px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 5px solid var(--theme-color);
+}
+
+.animated-image {
+  font-size: 5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.rhyme-content {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.rhyme-title {
+  color: var(--theme-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.lyrics-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.lyric-line {
+  margin: 0.8rem 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  transition: all 0.3s;
+}
+
+.lyric-line.highlight {
+  color: var(--highlight-color);
+  font-weight: bold;
+  font-size: 1.3rem;
+  transform: scale(1.02);
+}
+
+/* Sing Along */
+.sing-along {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.sing-along h3 {
+  color: var(--theme-color);
+  margin-bottom: 0.5rem;
+}
+
+.current-line {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--highlight-color);
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Error Message */
+.error-message {
+  color: #e74c3c;
+  text-align: center;
+  padding: 1rem;
+  background: #ffebee;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .rhyme-display {
+    grid-template-columns: 1fr;
+  }
+  
+  .rhyme-selector {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .player-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .image-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+  }
+  
+  .animated-image {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rhyme-selector {
+    grid-template-columns: 1fr;
+  }
+}

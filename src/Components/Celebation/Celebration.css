@@ -1,0 +1,24 @@
+/* src/components/Celebration.css */
+.celebration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.celebration-item {
+  font-size: 3rem;
+  animation: float 3s ease-in-out infinite;
+  margin: 0 1rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-50px); }
+}

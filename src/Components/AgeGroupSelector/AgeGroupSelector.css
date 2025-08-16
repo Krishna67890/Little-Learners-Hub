@@ -1,0 +1,26 @@
+/* src/Components/AgeGroupSelector/AgeGroupSelector.css */
+.age-selector {
+  margin: 1rem 0;
+}
+
+.age-selector label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.age-select {
+  padding: 0.5rem;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.age-select:focus {
+  outline: none;
+  border-color: #45a049;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
