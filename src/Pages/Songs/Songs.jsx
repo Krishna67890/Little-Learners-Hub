@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './songs.css';
+import './Songs.css';
 
 const SongsPage = () => {
   const [currentSong, setCurrentSong] = useState(null);
