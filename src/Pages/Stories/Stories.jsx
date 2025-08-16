@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './stories.css';
+import './Stories.css';
 
 const StoriesPage = () => {
   // Sample stories data
