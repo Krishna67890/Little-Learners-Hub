@@ -11,6 +11,9 @@ import Parents from "./Pages/Parents/Parents.jsx";
 import Songs from "./Pages/Songs/Songs.jsx";
 import Stories from "./Pages/Stories/Stories.jsx";
 import Games from "./Pages/Games/Games.jsx";
+import FirstStd from "./Pages/FirstStd/FirstStd.jsx";
+import SecondStd from "./Pages/SecondStd/SecondStd.jsx";
+import ThirdStd from "./Pages/ThirdStd/ThirdStd.jsx";
 import "./App.css";
 
 function App() {
@@ -28,6 +31,10 @@ function App() {
         <Route path="/songs" element={<Songs />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/games" element={<Games />} />
+        {/* New standard pages */}
+        <Route path="/first-std" element={<FirstStd />} />
+        <Route path="/second-std" element={<SecondStd />} />
+        <Route path="/third-std" element={<ThirdStd />} />
       </Routes>
       <Footer />
     </div>

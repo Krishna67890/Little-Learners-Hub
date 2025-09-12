@@ -2,33 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import './ShapesColors.css';
 
 const ShapesColors = () => {
-  // Audio files for shapes and colors
-  const shapeAudios = {
-    Circle: '/audio/shapes/circle.mp3',
-    Triangle: '/audio/shapes/triangle.mp3',
-    Square: '/audio/shapes/square.mp3',
-    Rectangle: '/audio/shapes/rectangle.mp3',
-    Pentagon: '/audio/shapes/pentagon.mp3',
-    Hexagon: '/audio/shapes/hexagon.mp3',
-    Star: '/audio/shapes/star.mp3',
-    Heart: '/audio/shapes/heart.mp3',
-    Diamond: '/audio/shapes/diamond.mp3',
-    Oval: '/audio/shapes/oval.mp3'
-  };
-
-  const colorAudios = {
-    Red: '/audio/colors/red.mp3',
-    Orange: '/audio/colors/orange.mp3',
-    Yellow: '/audio/colors/yellow.mp3',
-    Green: '/audio/colors/green.mp3',
-    Blue: '/audio/colors/blue.mp3',
-    Purple: '/audio/colors/purple.mp3',
-    Pink: '/audio/colors/pink.mp3',
-    Brown: '/audio/colors/brown.mp3',
-    Black: '/audio/colors/black.mp3',
-    White: '/audio/colors/white.mp3'
-  };
-
   // Shapes data with additional properties
   const shapes = [
     { name: 'Circle', sides: 'Infinite', emoji: '⭕', class: 'circle', fact: "A circle has no corners!" },
@@ -40,7 +13,12 @@ const ShapesColors = () => {
     { name: 'Star', sides: '10', emoji: '⭐', class: 'star', fact: "Stars twinkle in the night sky!" },
     { name: 'Heart', sides: 'Curved', emoji: '❤️', class: 'heart', fact: "Hearts symbolize love!" },
     { name: 'Diamond', sides: '4', emoji: '♦️', class: 'diamond', fact: "Diamonds are precious gems!" },
-    { name: 'Oval', sides: 'Curved', emoji: '🏉', class: 'oval', fact: "Eggs have an oval shape!" }
+    { name: 'Oval', sides: 'Curved', emoji: '🏉', class: 'oval', fact: "Eggs have an oval shape!" },
+    { name: 'Crescent', sides: 'Curved', emoji: '🌙', class: 'crescent', fact: "The moon appears as a crescent sometimes!" },
+    { name: 'Cross', sides: '4', emoji: '➕', class: 'cross', fact: "A cross has intersecting lines!" },
+    { name: 'Arrow', sides: '7', emoji: '➡️', class: 'arrow', fact: "Arrows point in a direction!" },
+    { name: 'Spiral', sides: 'Curved', emoji: '🌀', class: 'spiral', fact: "Spirals are common in nature like seashells!" },
+    { name: 'Cloud', sides: 'Curved', emoji: '☁️', class: 'cloud', fact: "Clouds are fluffy and white!" }
   ];
 
   // Colors data with additional properties
@@ -54,7 +32,12 @@ const ShapesColors = () => {
     { name: 'Pink', hex: '#FFC0CB', emoji: '🌸', fact: "Pink is a pretty color!" },
     { name: 'Brown', hex: '#A52A2A', emoji: '🟤', fact: "Chocolate is brown!" },
     { name: 'Black', hex: '#000000', emoji: '⚫', fact: "Night sky is black!" },
-    { name: 'White', hex: '#FFFFFF', emoji: '⚪', fact: "Snow is white!" }
+    { name: 'White', hex: '#FFFFFF', emoji: '⚪', fact: "Snow is white!" },
+    { name: 'Gray', hex: '#808080', emoji: '🐘', fact: "Elephants are often gray!" },
+    { name: 'Gold', hex: '#FFD700', emoji: '🥇', fact: "Gold medals are awarded for first place!" },
+    { name: 'Silver', hex: '#C0C0C0', emoji: '🥈', fact: "Silver medals are awarded for second place!" },
+    { name: 'Cyan', hex: '#00FFFF', emoji: '💧', fact: "Cyan is a blue-green color!" },
+    { name: 'Magenta', hex: '#FF00FF', emoji: '🌺', fact: "Magenta is a purplish-red color!" }
   ];
 
   // Quiz questions
@@ -118,6 +101,36 @@ const ShapesColors = () => {
       options: ["White", "Blue", "Black", "Purple"],
       answer: "Black",
       type: "colors"
+    },
+    {
+      question: "Which shape is often seen in the night sky?",
+      options: ["Crescent", "Square", "Triangle", "Heart"],
+      answer: "Crescent",
+      type: "shapes"
+    },
+    {
+      question: "What color is silver?",
+      options: ["#C0C0C0", "#FFD700", "#808080", "#000000"],
+      answer: "#C0C0C0",
+      type: "colors"
+    },
+    {
+      question: "Which shape points in a direction?",
+      options: ["Circle", "Arrow", "Square", "Heart"],
+      answer: "Arrow",
+      type: "shapes"
+    },
+    {
+      question: "What color is cyan?",
+      options: ["Blue-green", "Red-yellow", "Purple-pink", "Orange-brown"],
+      answer: "Blue-green",
+      type: "colors"
+    },
+    {
+      question: "Which shape is common in seashells?",
+      options: ["Square", "Triangle", "Spiral", "Cross"],
+      answer: "Spiral",
+      type: "shapes"
     }
   ];
 
@@ -127,50 +140,128 @@ const ShapesColors = () => {
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [quizMode, setQuizMode] = useState('mixed'); // 'shapes', 'colors', or 'mixed'
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
   const [showFact, setShowFact] = useState(false);
-  const audioRef = useRef(null);
+  const [recentItems, setRecentItems] = useState([]);
+  const [quizAnswers, setQuizAnswers] = useState([]);
+  const [difficulty, setDifficulty] = useState('easy'); // 'easy', 'medium', 'hard'
+  const [voice, setVoice] = useState(null);
+  const [voices, setVoices] = useState([]);
+  const [rate, setRate] = useState(0.8);
+  const [pitch, setPitch] = useState(1);
+  const synthRef = useRef(null);
+
+  // Initialize speech synthesis
+  useEffect(() => {
+    synthRef.current = window.speechSynthesis;
+    
+    const loadVoices = () => {
+      const availableVoices = synthRef.current.getVoices();
+      setVoices(availableVoices);
+      
+      // Try to find a child-friendly voice
+      const childVoice = availableVoices.find(voice => 
+        voice.name.includes('Child') || 
+        voice.name.includes('Kids') ||
+        voice.name.includes('Young')
+      ) || availableVoices[0];
+      
+      if (childVoice) {
+        setVoice(childVoice);
+      }
+    };
+    
+    // Chrome loads voices asynchronously
+    if (synthRef.current.onvoiceschanged !== undefined) {
+      synthRef.current.onvoiceschanged = loadVoices;
+    }
+    
+    loadVoices();
+    
+    return () => {
+      if (synthRef.current) {
+        synthRef.current.cancel();
+      }
+    };
+  }, []);
+
+  // Filter questions based on quiz mode and difficulty
+  const getFilteredQuestions = () => {
+    let filtered = quizQuestions;
+    
+    // Filter by type if not mixed
+    if (quizMode !== 'mixed') {
+      filtered = filtered.filter(q => q.type === quizMode);
+    }
+    
+    // Filter by difficulty (for this example, we'll use question index as difficulty proxy)
+    if (difficulty === 'easy') {
+      filtered = filtered.slice(0, 8);
+    } else if (difficulty === 'medium') {
+      filtered = filtered.slice(4, 12);
+    } else {
+      filtered = filtered.slice(8);
+    }
+    
+    // Shuffle questions
+    return filtered.sort(() => Math.random() - 0.5).slice(0, 10);
+  };
+
+  // Speak text using Web Speech API
+  const speak = (text) => {
+    if (audioPlaying || !synthRef.current || !voice) return;
+    
+    // Stop any ongoing speech
+    synthRef.current.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voice;
+    utterance.rate = rate;
+    utterance.pitch = pitch;
+    utterance.volume = volume;
+    
+    setAudioPlaying(true);
+    
+    utterance.onend = () => {
+      setAudioPlaying(false);
+      if (showFact) {
+        setTimeout(() => setShowFact(false), 3000);
+      }
+    };
+    
+    utterance.onerror = () => {
+      setAudioPlaying(false);
+    };
+    
+    synthRef.current.speak(utterance);
+  };
 
   // Play audio for the selected item
   const playAudio = () => {
     if (audioPlaying) return;
     
-    const audioFile = activeTab === 'shapes' 
-      ? shapeAudios[selectedItem.name]
-      : colorAudios[selectedItem.name];
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-
-    const audio = new Audio(audioFile);
-    audio.volume = volume;
-    audioRef.current = audio;
-
-    setAudioPlaying(true);
-    audio.play()
-      .then(() => {
-        audio.onended = () => {
-          setAudioPlaying(false);
-          if (showFact) {
-            setTimeout(() => setShowFact(false), 3000);
-          }
-        };
-      })
-      .catch(error => {
-        console.error("Audio playback error:", error);
-        setAudioPlaying(false);
-      });
+    const textToSpeak = activeTab === 'shapes' 
+      ? `This is a ${selectedItem.name}. ${selectedItem.fact}`
+      : `This is the color ${selectedItem.name}. ${selectedItem.fact}`;
+    
+    speak(textToSpeak);
   };
 
   // Handle item selection
   const selectItem = (item) => {
     setSelectedItem(item);
     setShowFact(true);
+    
+    // Add to recent items (limit to 5)
+    setRecentItems(prev => {
+      const filtered = prev.filter(i => i.name !== item.name);
+      return [item, ...filtered.slice(0, 4)];
+    });
+    
     if (autoPlay) {
       playAudio();
     }
@@ -180,39 +271,80 @@ const ShapesColors = () => {
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
+  };
+
+  // Handle rate change
+  const handleRateChange = (e) => {
+    setRate(parseFloat(e.target.value));
+  };
+
+  // Handle pitch change
+  const handlePitchChange = (e) => {
+    setPitch(parseFloat(e.target.value));
+  };
+
+  // Handle voice change
+  const handleVoiceChange = (e) => {
+    const selectedVoice = voices.find(voice => voice.name === e.target.value);
+    if (selectedVoice) {
+      setVoice(selectedVoice);
     }
   };
 
   // Start quiz
   const startQuiz = () => {
+    const questions = getFilteredQuestions();
     setShowQuiz(true);
     setCurrentQuestion(0);
     setScore(0);
     setShowScore(false);
+    setQuizAnswers([]);
   };
 
   // Handle quiz answer
   const handleAnswer = (selectedAnswer) => {
-    const isCorrect = quizQuestions[currentQuestion].answer === selectedAnswer;
+    const currentQ = getFilteredQuestions()[currentQuestion];
+    const isCorrect = currentQ.answer === selectedAnswer;
+    
+    // Record the answer
+    setQuizAnswers(prev => [...prev, {
+      question: currentQ.question,
+      userAnswer: selectedAnswer,
+      correctAnswer: currentQ.answer,
+      isCorrect
+    }]);
+    
     if (isCorrect) {
       setScore(score + 1);
     }
 
-    // Play feedback sound
-    const feedbackAudio = new Audio(isCorrect ? '/audio/correct.mp3' : '/audio/wrong.mp3');
-    feedbackAudio.volume = volume;
-    feedbackAudio.play();
+    // Speak feedback
+    const feedbackText = isCorrect 
+      ? "Correct! Good job!" 
+      : `Incorrect. The right answer is ${currentQ.answer}.`;
+    
+    speak(feedbackText);
 
     // Move to next question or show score
-    if (currentQuestion < quizQuestions.length - 1) {
-      setTimeout(() => setCurrentQuestion(currentQuestion + 1), 1500);
+    if (currentQuestion < getFilteredQuestions().length - 1) {
+      setTimeout(() => setCurrentQuestion(currentQuestion + 1), 2000);
     } else {
       setTimeout(() => {
         setShowScore(true);
         setShowQuiz(false);
-      }, 1500);
+        
+        // Speak final score
+        setTimeout(() => {
+          speak(`Quiz completed! You scored ${score + (isCorrect ? 1 : 0)} out of ${getFilteredQuestions().length}`);
+        }, 500);
+      }, 2000);
+    }
+  };
+
+  // Read the quiz question
+  const readQuestion = () => {
+    if (getFilteredQuestions()[currentQuestion]) {
+      speak(getFilteredQuestions()[currentQuestion].question);
     }
   };
 
@@ -224,16 +356,16 @@ const ShapesColors = () => {
 
   // Auto-play effect
   useEffect(() => {
-    if (autoPlay && !showQuiz) {
+    if (autoPlay && !showQuiz && selectedItem) {
       playAudio();
     }
   }, [selectedItem]);
 
+  // Get current filtered questions
+  const filteredQuestions = getFilteredQuestions();
+
   return (
     <div className="shapes-colours-container">
-      {/* Audio element */}
-      <audio ref={audioRef} />
-      
       {/* Header with tabs */}
       <header className="sc-header">
         <h1>Shapes & Colours</h1>
@@ -260,17 +392,31 @@ const ShapesColors = () => {
         {showQuiz ? (
           <div className="quiz-container">
             <div className="quiz-progress">
-              Question {currentQuestion + 1}/{quizQuestions.length}
+              Question {currentQuestion + 1}/{filteredQuestions.length}
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${((currentQuestion + 1) / filteredQuestions.length) * 100}%` }}
+                ></div>
+              </div>
             </div>
             <h2 className="quiz-question">
-              {quizQuestions[currentQuestion].question}
+              {filteredQuestions[currentQuestion].question}
+              <button 
+                className="read-aloud-btn"
+                onClick={readQuestion}
+                disabled={audioPlaying}
+              >
+                {audioPlaying ? '🔊' : '🔈'}
+              </button>
             </h2>
             <div className="quiz-options">
-              {quizQuestions[currentQuestion].options.map((option, index) => (
+              {filteredQuestions[currentQuestion].options.map((option, index) => (
                 <button
                   key={index}
                   className="quiz-option"
                   onClick={() => handleAnswer(option)}
+                  disabled={audioPlaying}
                 >
                   {option}
                 </button>
@@ -281,11 +427,24 @@ const ShapesColors = () => {
           <div className="score-container">
             <h2>Quiz Completed!</h2>
             <p className="score-text">
-              You scored {score} out of {quizQuestions.length}
+              You scored {score} out of {filteredQuestions.length}
             </p>
             <div className="score-emoji">
-              {score === quizQuestions.length ? '🎉' : score >= quizQuestions.length / 2 ? '👍' : '😊'}
+              {score === filteredQuestions.length ? '🎉' : score >= filteredQuestions.length / 2 ? '👍' : '😊'}
             </div>
+            
+            {/* Quiz review */}
+            <div className="quiz-review">
+              <h3>Review your answers:</h3>
+              {quizAnswers.map((answer, index) => (
+                <div key={index} className={`review-item ${answer.isCorrect ? 'correct' : 'incorrect'}`}>
+                  <p><strong>Q:</strong> {answer.question}</p>
+                  <p><strong>Your answer:</strong> {answer.userAnswer}</p>
+                  {!answer.isCorrect && <p><strong>Correct answer:</strong> {answer.correctAnswer}</p>}
+                </div>
+              ))}
+            </div>
+            
             <button className="play-again-btn" onClick={resetQuiz}>
               Play Again
             </button>
@@ -333,18 +492,59 @@ const ShapesColors = () => {
                 >
                   {audioPlaying ? '🔊 Playing...' : '▶ Play Sound'}
                 </button>
-                <div className="volume-control">
-                  <span>🔈</span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.1"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                  />
-                  <span>🔊</span>
+                
+                <div className="voice-settings">
+                  <div className="setting-group">
+                    <label>Voice:</label>
+                    <select value={voice?.name || ''} onChange={handleVoiceChange}>
+                      {voices.map(voice => (
+                        <option key={voice.name} value={voice.name}>
+                          {voice.name} ({voice.lang})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="setting-group">
+                    <label>Speed:</label>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2"
+                      step="0.1"
+                      value={rate}
+                      onChange={handleRateChange}
+                    />
+                    <span>{rate.toFixed(1)}x</span>
+                  </div>
+                  
+                  <div className="setting-group">
+                    <label>Pitch:</label>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2"
+                      step="0.1"
+                      value={pitch}
+                      onChange={handlePitchChange}
+                    />
+                    <span>{pitch.toFixed(1)}</span>
+                  </div>
+                  
+                  <div className="setting-group">
+                    <label>Volume:</label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.1"
+                      value={volume}
+                      onChange={handleVolumeChange}
+                    />
+                    <span>{Math.round(volume * 100)}%</span>
+                  </div>
                 </div>
+                
                 <label className="autoplay-toggle">
                   <input
                     type="checkbox"
@@ -354,6 +554,31 @@ const ShapesColors = () => {
                   Auto-play
                 </label>
               </div>
+
+              {/* Recently viewed items */}
+              {recentItems.length > 0 && (
+                <div className="recent-items">
+                  <h3>Recently Viewed:</h3>
+                  <div className="recent-items-list">
+                    {recentItems.map((item, index) => (
+                      <button
+                        key={index}
+                        className="recent-item"
+                        onClick={() => selectItem(item)}
+                        disabled={audioPlaying}
+                      >
+                        {activeTab === 'shapes' ? item.emoji : (
+                          <span 
+                            className="color-dot" 
+                            style={{ backgroundColor: item.hex }}
+                          ></span>
+                        )}
+                        <span>{item.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Options grid */}
@@ -364,6 +589,7 @@ const ShapesColors = () => {
                     key={shape.name}
                     className={`option-card ${selectedItem.name === shape.name ? 'active' : ''}`}
                     onClick={() => selectItem(shape)}
+                    disabled={audioPlaying}
                   >
                     <div className={`shape-icon ${shape.class}`}>
                       {shape.emoji}
@@ -378,6 +604,7 @@ const ShapesColors = () => {
                     className={`option-card ${selectedItem.name === color.name ? 'active' : ''}`}
                     onClick={() => selectItem(color)}
                     style={{ backgroundColor: color.hex }}
+                    disabled={audioPlaying}
                   >
                     <span className="color-emoji">{color.emoji}</span>
                     <span className="color-name">{color.name}</span>
@@ -394,6 +621,24 @@ const ShapesColors = () => {
         {!showQuiz && !showScore && (
           <>
             <p>Tap any shape or colour to hear its name!</p>
+            <div className="quiz-settings">
+              <div className="setting-group">
+                <label>Quiz Mode:</label>
+                <select value={quizMode} onChange={(e) => setQuizMode(e.target.value)}>
+                  <option value="mixed">Mixed</option>
+                  <option value="shapes">Shapes Only</option>
+                  <option value="colors">Colors Only</option>
+                </select>
+              </div>
+              <div className="setting-group">
+                <label>Difficulty:</label>
+                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
+            </div>
             <button className="quiz-button" onClick={startQuiz}>
               🎯 Take the Quiz!
             </button>

@@ -1,0 +1,611 @@
+.second-std {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  color: #333;
+}
+
+.std-header {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.std-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.2rem;
+}
+
+.std-header p {
+  margin: 0 0 1.5rem 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: width 0.5s ease;
+}
+
+.learning-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 2rem auto;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.subjects-sidebar {
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.subject-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.subject-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subject-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.subject-btn.active {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.subject-icon {
+  font-size: 1.5rem;
+}
+
+.subject-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+.subject-progress .progress-bar {
+  height: 6px;
+  background-color: #e0e0e0;
+}
+
+.subject-progress .progress-fill {
+  background-color: #4CAF50;
+}
+
+.subject-progress span {
+  font-size: 0.8rem;
+  color: #666;
+  min-width: 40px;
+  text-align: right;
+}
+
+.main-content {
+  flex: 1;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.topic-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  background-color: #f9fafb;
+}
+
+.topic-buttons {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.topic-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.topic-btn:hover {
+  background-color: #f0f4ff;
+  border-color: #c5d2ff;
+}
+
+.topic-btn.active {
+  background-color: #4e73ff;
+  color: white;
+  border-color: #4e73ff;
+}
+
+.topic-number {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
+}
+
+.topic-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.quiz-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quiz-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 126, 95, 0.3);
+}
+
+.lesson-container {
+  padding: 2rem;
+}
+
+.lesson-header {
+  margin-bottom: 2rem;
+}
+
+.topic-title {
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem 0;
+  color: #2d3748;
+}
+
+.topic-description {
+  color: #718096;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lesson-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lesson-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.lesson-number {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4e73ff;
+  margin-bottom: 1rem;
+}
+
+.text-lesson p {
+  line-height: 1.6;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.image-lesson {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.image-lesson img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+  font-style: italic;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.audio-lesson, .game-lesson, .interactive-lesson, .activity-lesson, .experiment-lesson {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.audio-lesson p, .game-lesson p, .interactive-lesson p, .activity-lesson p, .experiment-lesson p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.play-btn, .interactive-btn, .activity-btn, .experiment-btn {
+  align-self: flex-start;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.play-btn {
+  background-color: #ff7e5f;
+  color: white;
+}
+
+.interactive-btn {
+  background-color: #4e73ff;
+  color: white;
+}
+
+.activity-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.experiment-btn {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.play-btn:hover, .interactive-btn:hover, .activity-btn:hover, .experiment-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-container {
+  padding: 2rem;
+}
+
+.question-section {
+  margin-bottom: 2rem;
+}
+
+.question-count {
+  font-size: 1.1rem;
+  color: #718096;
+  margin-bottom: 1rem;
+}
+
+.question-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.answer-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.answer-btn {
+  padding: 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.answer-btn:hover {
+  background-color: #f0f4ff;
+  border-color: #c5d2ff;
+}
+
+.score-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.score-section h2 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.score-section p {
+  font-size: 1.2rem;
+  color: #718096;
+  margin-bottom: 2rem;
+}
+
+.score-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.retry-btn, .back-btn, .certificate-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retry-btn {
+  background-color: #4e73ff;
+  color: white;
+}
+
+.back-btn {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.certificate-btn {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+}
+
+.retry-btn:hover, .back-btn:hover, .certificate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.certificate {
+  width: 100%;
+  max-width: 800px;
+  border: 20px solid #f4d03f;
+  padding: 3rem;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+}
+
+.certificate h2 {
+  color: #2d3748;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.certificate-content {
+  padding: 2rem;
+  border: 2px dashed #c5d2ff;
+}
+
+.certificate-content h3 {
+  font-size: 2rem;
+  color: #4e73ff;
+  margin: 1rem 0;
+}
+
+.score-display {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4CAF50;
+  margin: 1.5rem 0;
+}
+
+.certificate-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.signature, .date {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.activities-section {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.activities-section h2 {
+  text-align: center;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+.activities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.activity {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activity:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.activity-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.activity h3 {
+  color: #2d3748;
+  margin: 0 0 0.5rem 0;
+}
+
+.activity p {
+  color: #718096;
+  margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .learning-container {
+    flex-direction: column;
+  }
+  
+  .subjects-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  
+  .subject-item {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .topic-buttons {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .answer-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .topic-navigation {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .quiz-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .certificate-footer {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .activities {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .std-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .progress-indicator {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .topic-buttons {
+    flex-direction: column;
+  }
+  
+  .lesson-container, .quiz-container {
+    padding: 1rem;
+  }
+  
+  .certificate {
+    padding: 1.5rem;
+    border-width: 10px;
+  }
+  
+  .certificate h2 {
+    font-size: 2rem;
+  }
+  
+  .certificate-content h3 {
+    font-size: 1.5rem;
+  }
+}
