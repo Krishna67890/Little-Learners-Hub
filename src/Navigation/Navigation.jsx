@@ -87,6 +87,14 @@ const Navigation = () => {
       icon: '🎵', 
       sound: '/sounds/songs.mp3',
     },
+    // Add About Us to navigation
+    { 
+      id: 'about-us', 
+      path: '/about-us', 
+      label: 'About Us', 
+      icon: '👥', 
+      sound: '/sounds/info.mp3',
+    },
   ];
 
   // Grade level items
@@ -195,7 +203,10 @@ const Navigation = () => {
               <Link
                 to={item.path}
                 className={`nav-link ${activeTab === item.id ? 'active' : ''}`}
-                onClick={() => playSound(item.sound)}
+                onClick={() => {
+                  playSound(item.sound);
+                  setIsMenuOpen(false); // Close menu on mobile when item is clicked
+                }}
                 aria-current={activeTab === item.id ? 'page' : undefined}
               >
                 <span className="nav-icon" role="img" aria-hidden="true">{item.icon}</span>

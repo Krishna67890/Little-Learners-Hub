@@ -14,6 +14,7 @@ import Games from "./Pages/Games/Games.jsx";
 import FirstStd from "./Pages/FirstStd/FirstStd.jsx";
 import SecondStd from "./Pages/SecondStd/SecondStd.jsx";
 import ThirdStd from "./Pages/ThirdStd/ThirdStd.jsx";
+import AboutUs from "./Pages/About/AboutUs.jsx";
 import "./App.css";
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
         <Route path="/first-std" element={<FirstStd />} />
         <Route path="/second-std" element={<SecondStd />} />
         <Route path="/third-std" element={<ThirdStd />} />
+        {/* Add AboutUs route */}
+        <Route path="/about-us" element={<AboutUs />} />
       </Routes>
       <Footer />
     </div>
